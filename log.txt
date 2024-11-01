@@ -1,0 +1,59 @@
+[Slack Sync/slack_sync] 🚀  Start image=catthehacker/ubuntu:act-latest
+[Slack Sync/slack_sync]   🐳  docker pull image=catthehacker/ubuntu:act-latest platform= username= forcePull=true
+[Slack Sync/slack_sync]   🐳  docker create image=catthehacker/ubuntu:act-latest platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[Slack Sync/slack_sync]   🐳  docker run image=catthehacker/ubuntu:act-latest platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[Slack Sync/slack_sync]   🐳  docker exec cmd=[node --no-warnings -e console.log(process.execPath)] user= workdir=
+[Slack Sync/slack_sync]   ☁  git clone 'https://github.com/actions/setup-python' # ref=v4
+[Slack Sync/slack_sync] ⭐ Run Main Checkout Code
+[Slack Sync/slack_sync]   🐳  docker cp src=/mnt/c/Users/deepa/OneDrive/Desktop/Github Actions/Github-Actions-Learning/. dst=/mnt/c/Users/deepa/OneDrive/Desktop/Github Actions/Github-Actions-Learning
+[Slack Sync/slack_sync]   ✅  Success - Main Checkout Code
+[Slack Sync/slack_sync] ⭐ Run Main Set up Python
+[Slack Sync/slack_sync]   🐳  docker cp src=/home/deepak/.cache/act/actions-setup-python@v4/ dst=/var/run/act/actions/actions-setup-python@v4/
+[Slack Sync/slack_sync]   🐳  docker exec cmd=[/opt/acttoolcache/node/18.20.4/x64/bin/node /var/run/act/actions/actions-setup-python@v4/dist/setup/index.js] user= workdir=
+[Slack Sync/slack_sync]   💬  ::debug::Python is expected to be installed into /opt/hostedtoolcache
+[Slack Sync/slack_sync]   ❓  ::group::Installed versions
+[Slack Sync/slack_sync]   💬  ::debug::Semantic version spec of 3.11 is 3.11
+[Slack Sync/slack_sync]   💬  ::debug::isExplicit: 
+[Slack Sync/slack_sync]   💬  ::debug::explicit? false
+[Slack Sync/slack_sync]   💬  ::debug::isExplicit: 3.11.10
+[Slack Sync/slack_sync]   💬  ::debug::explicit? true
+[Slack Sync/slack_sync]   💬  ::debug::evaluating 1 versions
+[Slack Sync/slack_sync]   💬  ::debug::matched: 3.11.10
+[Slack Sync/slack_sync]   💬  ::debug::checking cache: /opt/hostedtoolcache/Python/3.11.10/x64
+[Slack Sync/slack_sync]   💬  ::debug::Found tool in cache Python 3.11.10 x64
+[Slack Sync/slack_sync]   | Successfully set up CPython (3.11.10)
+[Slack Sync/slack_sync]   ❓  ::endgroup::
+[Slack Sync/slack_sync]   ❓ add-matcher /run/act/actions/actions-setup-python@v4/.github/python.json
+[Slack Sync/slack_sync]   ✅  Success - Main Set up Python
+[Slack Sync/slack_sync]   ⚙  ::set-env:: PKG_CONFIG_PATH=/opt/hostedtoolcache/Python/3.11.10/x64/lib/pkgconfig
+[Slack Sync/slack_sync]   ⚙  ::set-env:: Python_ROOT_DIR=/opt/hostedtoolcache/Python/3.11.10/x64
+[Slack Sync/slack_sync]   ⚙  ::set-env:: Python2_ROOT_DIR=/opt/hostedtoolcache/Python/3.11.10/x64
+[Slack Sync/slack_sync]   ⚙  ::set-env:: Python3_ROOT_DIR=/opt/hostedtoolcache/Python/3.11.10/x64
+[Slack Sync/slack_sync]   ⚙  ::set-env:: LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.11.10/x64/lib
+[Slack Sync/slack_sync]   ⚙  ::set-env:: pythonLocation=/opt/hostedtoolcache/Python/3.11.10/x64
+[Slack Sync/slack_sync]   ⚙  ::set-output:: python-version=3.11.10
+[Slack Sync/slack_sync]   ⚙  ::set-output:: python-path=/opt/hostedtoolcache/Python/3.11.10/x64/bin/python
+[Slack Sync/slack_sync]   ⚙  ::add-path:: /opt/hostedtoolcache/Python/3.11.10/x64
+[Slack Sync/slack_sync]   ⚙  ::add-path:: /opt/hostedtoolcache/Python/3.11.10/x64/bin
+[Slack Sync/slack_sync] ⭐ Run Main Install Requests library
+[Slack Sync/slack_sync]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/2] user= workdir=
+[Slack Sync/slack_sync]   | Requirement already satisfied: requests in /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages (2.32.3)
+[Slack Sync/slack_sync]   | Requirement already satisfied: charset-normalizer<4,>=2 in /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages (from requests) (3.4.0)
+[Slack Sync/slack_sync]   | Requirement already satisfied: idna<4,>=2.5 in /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages (from requests) (3.10)
+[Slack Sync/slack_sync]   | Requirement already satisfied: urllib3<3,>=1.21.1 in /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages (from requests) (2.2.3)
+[Slack Sync/slack_sync]   | Requirement already satisfied: certifi>=2017.4.17 in /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages (from requests) (2024.8.30)
+[Slack Sync/slack_sync]   | WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Slack Sync/slack_sync]   ✅  Success - Main Install Requests library
+[Slack Sync/slack_sync] ⭐ Run Main Determine Slack Message
+[Slack Sync/slack_sync]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/slack_message] user= workdir=
+[Slack Sync/slack_sync]   | push
+[Slack Sync/slack_sync]   | 
+[Slack Sync/slack_sync]   | Traceback (most recent call last):
+[Slack Sync/slack_sync]   |   File "/mnt/c/Users/deepa/OneDrive/Desktop/Github Actions/Github-Actions-Learning/send_slack_message.py", line 26, in <module>
+[Slack Sync/slack_sync]   |     message = os.environ["MESSAGE"]
+[Slack Sync/slack_sync]   |               ~~~~~~~~~~^^^^^^^^^^^
+[Slack Sync/slack_sync]   |   File "<frozen os>", line 679, in __getitem__
+[Slack Sync/slack_sync]   | KeyError: 'MESSAGE'
+[Slack Sync/slack_sync]   ❌  Failure - Main Determine Slack Message
+[Slack Sync/slack_sync] exitcode '1': failure
+[Slack Sync/slack_sync] 🏁  Job failed
