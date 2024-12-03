@@ -23,6 +23,12 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
+  initialize:
+    name: Initialize Workflow
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Initialize Workflow"
+        shell: bash
   approval:
     name: Approve Workflow Deployment
     if: ${{ inputs.USE_APPROVALS == 'true' }}
