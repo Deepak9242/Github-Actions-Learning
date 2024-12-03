@@ -19,6 +19,12 @@ on:
         options:
           - 'true'
           - 'false'
+      ERROR: 
+        description: Enable Error?
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,11 +37,19 @@ jobs:
         shell: bash
   approval:
     name: Approve Workflow Deployment
-    if: ${{ inputs.USE_APPROVALS == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Approved Workflow Deployment"
+      - name: Simulate Error
+        if: ${{ inputs.ERROR == 'true' }}
+        run: |
+          echo "Simulating Error"
+          exit 1
+  
+      - name: Approve Workflow Deployment
+        if: ${{ inputs.USE_APPROVALS == 'true' }}
+        run: echo "Approved Workflow Deployment"
         shell: bash
+
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
