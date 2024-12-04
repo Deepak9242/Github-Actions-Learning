@@ -32,10 +32,10 @@ jobs:
   approval:
     name: Approve Workflow Deployment
     runs-on: ubuntu-latest
+    if: ${{ inputs.USE_APPROVALS == 'true' }}
     environment: approval-environment
     steps:
       - name: Approve Workflow Deployment
-        if: ${{ inputs.USE_APPROVALS == 'true' }}
         run: echo "Approved Workflow Deployment"
         shell: bash
 
