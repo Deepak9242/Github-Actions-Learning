@@ -27,8 +27,7 @@ jobs:
     name: Initialize Workflow
     runs-on: ubuntu-latest
     steps:
-      - if: ${{inputs.ACCESS=='true'}}
-        run: echo "Initialize Workflow"
+      - run: echo "Initialize Workflow:${{inputs.ACCESS}}"
         shell: bash
         
   approval:
