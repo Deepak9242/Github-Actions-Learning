@@ -65,7 +65,6 @@ jobs:
           echo "test, and deploy your project. Approval result: ${{ needs.approval.result }}"
 
       - name: Map environment variables based on selections
-        id: env-output
         env:
           ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT }}
         run: |
