@@ -92,6 +92,8 @@ jobs:
             echo "DD_ENV=devint" >> $GITHUB_ENV
           fi
 
+          echo "::set-output name=DD_ENV::$(echo $DD_ENV)"
+
   # Notification job
   notify:
     name: Notify Workflow
