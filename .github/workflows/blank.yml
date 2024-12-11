@@ -99,5 +99,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify with environment details
-        run: echo "Notify Workflow: ${{ needs.build.outputs.DD_ENV }}"
+        run: echo "Notify Workflow:${{ needs.build.outputs.DD_ENV }}"
         shell: bash
