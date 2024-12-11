@@ -14,89 +14,90 @@ on:
   workflow_dispatch:
     inputs:
       USE_APPROVALS: 
-        description: Enable approvals?
+        description: "Enable approvals?"
+        required: true
         type: choice
         options:
           - 'true'
           - 'false'
       ENVIRONMENT:
-        description: Environment 
+        description: "Environment"
+        required: true
         type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # Initialization step
   initialize:
     name: Initialize Workflow
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Initialize Workflow:${{inputs.ACCESS}}"
+      - name: Log Initialization
+        run: echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }}"
         shell: bash
-        
+
+  # Approval job
   approval:
     name: Approve Workflow Deployment
     runs-on: ubuntu-latest
-    if: ${{ inputs.USE_APPROVALS == 'true' }}
+    if: ${{ github.event.inputs.USE_APPROVALS == 'true' }}
     environment: approval-environment
     steps:
       - name: Approve Workflow Deployment
         run: echo "Approved Workflow Deployment"
         shell: bash
-        
-  
 
+  # Build job
   build:
-    # The type of runner that the job will run on
+    name: Build and Set Environment Variables
     runs-on: ubuntu-latest
     needs: [approval]
-    if: ${{ !failure() && !cancelled() }}
+    if: ${{ success() && !cancelled() }}
     outputs:
-      DD_ENV: ${{steps.env-output.outputs.DD_ENV}}
-    # Steps represent a sequence of tasks that will be executed as part of the job
+      DD_ENV: ${{ steps.env-output.outputs.DD_ENV }}
     steps:
-      # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo "Hello, world!"
 
-      # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project. ${{needs.approval.result}}
-      - name: Map env vars based on selections
+          echo "Add other actions to build,"
+          echo "test, and deploy your project. Approval result: ${{ needs.approval.result }}"
+
+      - name: Map environment variables based on selections
         id: env-output
         env:
-          ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
-        shell: bash
+          ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT }}
         run: |
           if [ "$ENVIRONMENT" == "prod" ]; then
-            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_PROD }}" >> "$GITHUB_ENV"
-            echo "new_relic_account=1610606" >> "$GITHUB_ENV"
-            echo "AWS_ACCOUNT_ID=805080102354" >> "$GITHUB_ENV"
-            echo "accountAlias=awsdficmnsvc" >> "$GITHUB_ENV"
+            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_PROD }}" >> $GITHUB_ENV
+            echo "new_relic_account=1610606" >> $GITHUB_ENV
+            echo "AWS_ACCOUNT_ID=805080102354" >> $GITHUB_ENV
+            echo "accountAlias=awsdficmnsvc" >> $GITHUB_ENV
           elif [ "$ENVIRONMENT" == "lab" ]; then
-            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_NON_PROD }}" >> "$GITHUB_ENV"
-            echo "new_relic_account=1610605" >> "$GITHUB_ENV"
-            echo "AWS_ACCOUNT_ID=607694952559" >> "$GITHUB_ENV"
-            echo "accountAlias=awscoxautolabs18" >> "$GITHUB_ENV"
-            echo "DD_ENV=lab" >> "$GITHUB_ENV"
+            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_NON_PROD }}" >> $GITHUB_ENV
+            echo "new_relic_account=1610605" >> $GITHUB_ENV
+            echo "AWS_ACCOUNT_ID=607694952559" >> $GITHUB_ENV
+            echo "accountAlias=awscoxautolabs18" >> $GITHUB_ENV
+            echo "DD_ENV=lab" >> $GITHUB_ENV
           else
-            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_NON_PROD }}" >> "$GITHUB_ENV"
-            echo "new_relic_account=1610605" >> "$GITHUB_ENV"
-            echo "AWS_ACCOUNT_ID=581378238327" >> "$GITHUB_ENV"
-            echo "accountAlias=awsdficmnsvcnp" >> "$GITHUB_ENV"
+            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_NON_PROD }}" >> $GITHUB_ENV
+            echo "new_relic_account=1610605" >> $GITHUB_ENV
+            echo "AWS_ACCOUNT_ID=581378238327" >> $GITHUB_ENV
+            echo "accountAlias=awsdficmnsvcnp" >> $GITHUB_ENV
           fi
-          
-          echo "DD_ENV=$ENVIRONMENT" >> "$GITHUB_ENV"
+
+          echo "DD_ENV=$ENVIRONMENT" >> $GITHUB_ENV
           if [ "$ENVIRONMENT" == "dvi1" ]; then
-            echo "DD_ENV=devint" >> "$GITHUB_ENV"
+            echo "DD_ENV=devint" >> $GITHUB_ENV
           fi
-          
+
+  # Notification job
   notify:
     name: Notify Workflow
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - run: echo "NOtify Workflow:${{needs.build.outputs.DD_ENV}}"
+      - name: Notify with environment details
+        run: echo "Notify Workflow: ${{ needs.build.outputs.DD_ENV }}"
         shell: bash
-  
