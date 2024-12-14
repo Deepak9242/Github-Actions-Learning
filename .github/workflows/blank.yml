@@ -31,17 +31,16 @@ jobs:
   initialize:
     name: Initialize Workflow
     runs-on: ubuntu-latest
-    environment: approval-environment
+    environment: ${{inputs.ENVIRONMENT}}
     steps:
       - name: Log Initialization
         shell: bash
         run: |
           echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }}, the boolen:${{secrets.AWS_ACCOUNT_ID=='1234'}}"
-          if [ -z "${{ secrets.AWS_ACCOUNT_ID }}" ]; then
-            echo "MY_SECRET is not set or is empty."
-            exit 1
-          else
-            echo "MY_SECRET exists."
+          if [ "${{ github.event.deployment.environment }}" == "production" ]; then
+            echo "the boolen:${{secrets.AWS_ACCOUNT_ID=='1234'}}";
+          if [ "${{ github.event.deployment.environment }}" == "dev" ]; then
+            echo "the boolen:${{secrets.AWS_ACCOUNT_ID=='4321'}}";
           fi
         
 
