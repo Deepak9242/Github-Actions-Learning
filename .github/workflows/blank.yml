@@ -36,7 +36,7 @@ jobs:
       - name: Log Initialization
         shell: bash
         run: |
-          echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }}"
+          echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }}, the boolen:${{secrets.AWS_ACCOUNT_ID=='1234'}}"
           if [ -z "${{ secrets.AWS_ACCOUNT_ID }}" ]; then
             echo "MY_SECRET is not set or is empty."
             exit 1
