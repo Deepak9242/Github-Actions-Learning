@@ -33,8 +33,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log Initialization
-        run: echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }} The account id:${{secrets.AWS_ACCOUNT_ID==1234}}"
         shell: bash
+        run: |
+          echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }}"
+          if [ -z "${{ secrets.AWS_ACCOUNT_ID }}" ]; then
+            echo "MY_SECRET is not set or is empty."
+            exit 1
+          else
+            echo "MY_SECRET exists."
+          fi
+        
 
   # Approval job
   approval:
