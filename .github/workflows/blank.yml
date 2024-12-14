@@ -64,33 +64,6 @@ jobs:
           echo "Add other actions to build,"
           echo "test, and deploy your project. Approval result: ${{ needs.approval.result }}"
 
-      - name: Map environment variables based on selections
-        env:
-          ENVIRONMENT: ${{ github.event.inputs.ENVIRONMENT }}
-        run: |
-          if [ "$ENVIRONMENT" == "prod" ]; then
-            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_PROD }}" >> $GITHUB_ENV
-            echo "new_relic_account=1610606" >> $GITHUB_ENV
-            echo "AWS_ACCOUNT_ID=805080102354" >> $GITHUB_ENV
-            echo "accountAlias=awsdficmnsvc" >> $GITHUB_ENV
-          elif [ "$ENVIRONMENT" == "lab" ]; then
-            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_NON_PROD }}" >> $GITHUB_ENV
-            echo "new_relic_account=1610605" >> $GITHUB_ENV
-            echo "AWS_ACCOUNT_ID=607694952559" >> $GITHUB_ENV
-            echo "accountAlias=awscoxautolabs18" >> $GITHUB_ENV
-            echo "DD_ENV=lab" >> $GITHUB_ENV
-          else
-            echo "new_relic_api_key=${{ secrets.NEWRELIC_API_KEY_NON_PROD }}" >> $GITHUB_ENV
-            echo "new_relic_account=1610605" >> $GITHUB_ENV
-            echo "AWS_ACCOUNT_ID=581378238327" >> $GITHUB_ENV
-            echo "accountAlias=awsdficmnsvcnp" >> $GITHUB_ENV
-          fi
-
-          echo "DD_ENV=$ENVIRONMENT" >> $GITHUB_ENV
-          if [ "$ENVIRONMENT" == "dvi1" ]; then
-            echo "DD_ENV=devint" >> $GITHUB_ENV
-          fi
-
   # Notification job
   notify:
     name: Notify Workflow
