@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log Initialization
-        run: echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }} The account id:${{secrets.AWS_ACCOUNT_ID=='1234'}}"
+        run: echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }} The account id:${{secrets.AWS_ACCOUNT_ID==1234}}"
         shell: bash
 
   # Approval job
