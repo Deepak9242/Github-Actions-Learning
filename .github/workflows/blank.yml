@@ -38,9 +38,9 @@ jobs:
         run: |
           echo "Initialize Workflow: ${{ github.event.inputs.ENVIRONMENT }}, the boolean: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '1234' ]] && echo true || echo false)"
           if [ "${{ github.event.deployment.environment }}" == "production" ]; then
-            echo "The boolean: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '1234' ]] && echo true || echo false)";
+            echo "The production: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '1234' ]] && echo true || echo false)";
           elif [ "${{ github.event.deployment.environment }}" == "dev" ]; then
-            echo "The boolean: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '4321' ]] && echo true || echo false)";
+            echo "The dev: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '4321' ]] && echo true || echo false)";
           fi
         
 
