@@ -31,7 +31,7 @@ jobs:
   initialize:
     name: Initialize Workflow
     runs-on: ubuntu-latest
-    environment: ${{inputs.ENVIRONMENT || dev}}
+    environment: ${{inputs.ENVIRONMENT || 'dev'}}
     steps:
       - name: Log Initialization
         shell: bash
