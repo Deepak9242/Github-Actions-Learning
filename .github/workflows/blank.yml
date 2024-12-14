@@ -31,16 +31,16 @@ jobs:
   initialize:
     name: Initialize Workflow
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{inputs.ENVIRONMENT}}
     steps:
       - name: Log Initialization
         shell: bash
         run: |
-          echo "Initialize Workflow:${{ github.event.inputs.ENVIRONMENT }}, the boolen:${{secrets.AWS_ACCOUNT_ID=='1234'}}"
+          echo "Initialize Workflow: ${{ github.event.inputs.ENVIRONMENT }}, the boolean: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '1234' ]] && echo true || echo false)"
           if [ "${{ github.event.deployment.environment }}" == "production" ]; then
-            echo "the boolen:${{secrets.AWS_ACCOUNT_ID=='1234'}}";
-          if [ "${{ github.event.deployment.environment }}" == "dev" ]; then
-            echo "the boolen:${{secrets.AWS_ACCOUNT_ID=='4321'}}";
+            echo "The boolean: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '1234' ]] && echo true || echo false)";
+          elif [ "${{ github.event.deployment.environment }}" == "dev" ]; then
+            echo "The boolean: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '4321' ]] && echo true || echo false)";
           fi
         
 
