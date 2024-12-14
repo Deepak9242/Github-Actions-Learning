@@ -37,11 +37,11 @@ jobs:
       - name: Log Initialization
         shell: bash
         run: |
-          echo "Initialize Workflow: ${{ github.event.inputs.ENVIRONMENT }}:denv:${{github.event.deployment.environment}}, the boolean: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '1234' ]] && echo true || echo false)"
-          if [ "${{ github.event.deployment.environment }}" == "production" ]; then
-            echo "The production: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '1234' ]] && echo true || echo false)";
-          elif [ "${{ github.event.deployment.environment }}" == "dev" ]; then
-            echo "The dev: $([[ '${{ secrets.AWS_ACCOUNT_ID }}' == '4321' ]] && echo true || echo false)";
+          echo "Initialize Workflow: ${{ github.event.inputs.ENVIRONMENT }}:denv:${{inputs.ENVIRONMENT}}"
+          if [ "${{ inputs.ENVIRONMENT }}" == "production" ]; then
+            echo "The production: ${{secrets.AWS_ACCOUNT_ID=='1234'}}";
+          elif [ "${{ inputs.ENVIRONMENT }}" == "dev" ]; then
+            echo "The dev: ${{secrets.AWS_ACCOUNT_ID=='4321'}}";
           fi
         
 
