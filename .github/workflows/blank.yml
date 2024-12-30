@@ -35,6 +35,7 @@ jobs:
     environment: ${{inputs.ENVIRONMENT || 'dev'}}
     outputs:
       component_id: ${{steps.init-log.outputs.META_COMPONENT}}
+      proxy: ${{steps.init-log.outputs.PROXY}}
       
     steps:
       - uses: actions/checkout@v3
@@ -49,6 +50,7 @@ jobs:
           fi
           cat meta.json|jq -r 'to_entries|map("META_\(.key|ascii_upcase)=\(.value)")|.[]' >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+          echo "PROXY=123">>$GITHUB_OUTPUT
           cat meta.json|jq -r 'to_entries|map("META_\(.key|ascii_upcase)=\(.value)")|.[]' >> $GITHUB_STEP_SUMMARY
 
   # Approval job
@@ -72,8 +74,9 @@ jobs:
       DD_ENV: ${{ env.DD_ENV }}
     steps:
       - name: Run a one-line script
-        run: echo "Hello, world!"\
-             cat ${{needs.initialize.outputs}}
+        run: echo "Hello, world!"
+             echo "${{needs.initialize.outputs.component_id}}"
+             echo "${{needs.initialize.outputs.proxy}}"
 
       - name: Run a multi-line script
         run: |
