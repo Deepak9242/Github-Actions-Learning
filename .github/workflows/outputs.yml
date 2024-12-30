@@ -17,6 +17,7 @@ jobs:
         run: |
           echo "key1=Value1" >> $GITHUB_OUTPUT
           echo "key2=Value2" >> $GITHUB_OUTPUT
+          cat meta.json|jq -r 'to_entries|map("META_\(.key|ascii_upcase)=\(.value)")|.[]' >> $GITHUB_OUTPUT
 
   # Second job to set additional outputs
   job2:
@@ -42,6 +43,7 @@ jobs:
           echo "Job1 Outputs:"
           echo "Key1: ${{ needs.job1.outputs.key1 }}"
           echo "Key2: ${{ needs.job1.outputs.key2 }}"
+          echo "COMPONENT: ${{ needs.job1.outputs.META_COMPONENT }}"
 
       - name: Print Outputs from Job2
         run: |
