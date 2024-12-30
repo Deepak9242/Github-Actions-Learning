@@ -37,7 +37,6 @@ jobs:
       component_id: ${{steps.init.outputs.META_COMPONENT}}
       
     steps:
-      - name: Log Initialization
       - uses: actions/checkout@v3
         id: init
       - shell: bash
