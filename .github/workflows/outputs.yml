@@ -14,8 +14,9 @@ jobs:
       META_COMPONENT: ${{steps.set_output.outputs.META_COMPONENT}}
     steps:
       - uses: actions/checkout@v3
-      - name: Set Outputs
         id: set_output
+      - name: Set Outputs
+        id: set_output_2
         run: |
           echo "key1=Value1" >> $GITHUB_OUTPUT
           echo "key2=Value2" >> $GITHUB_OUTPUT
