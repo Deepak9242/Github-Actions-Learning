@@ -38,8 +38,9 @@ jobs:
       
     steps:
       - name: Log Initialization
+      - uses: actions/checkout@v3
         id: init
-        shell: bash
+      - shell: bash
         run: |
           echo "Initialize Workflow: ${{ github.event.inputs.ENVIRONMENT }}:denv:${{inputs.ENVIRONMENT}}"
           if [ "${{ inputs.ENVIRONMENT }}" == "production" ]; then
