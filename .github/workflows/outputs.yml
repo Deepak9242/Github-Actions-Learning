@@ -15,8 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         id: set_output
-      - name: Set Outputs
-        id: set_output_2
+      - shell: bash
         run: |
           echo "key1=Value1" >> $GITHUB_OUTPUT
           echo "key2=Value2" >> $GITHUB_OUTPUT
