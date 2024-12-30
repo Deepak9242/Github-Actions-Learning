@@ -18,6 +18,7 @@ jobs:
         run: |
           echo "key1=Value1" >> $GITHUB_OUTPUT
           echo "key2=Value2" >> $GITHUB_OUTPUT
+          cat meta.json|jq -r 'to_entries|map("META_\(.key|ascii_upcase)=\(.value)")|.[]'
           cat meta.json|jq -r 'to_entries|map("META_\(.key|ascii_upcase)=\(.value)")|.[]' >> $GITHUB_OUTPUT
 
   # Second job to set additional outputs
