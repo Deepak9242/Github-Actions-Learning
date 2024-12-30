@@ -47,7 +47,7 @@ jobs:
           elif [ "${{ inputs.ENVIRONMENT }}" == "dev" ]; then
             echo "The dev: ${{secrets.AWS_ACCOUNT_ID=='4321'}}";
           fi
-          cat .meta/meta.json|jq -r 'to_entries|map("META_\(.key|ascii_upcase)=\(.value)")|.[]' >> $GITHUB_OUTPUT
+          cat meta.json|jq -r 'to_entries|map("META_\(.key|ascii_upcase)=\(.value)")|.[]' >> $GITHUB_OUTPUT
         
 
   # Approval job
