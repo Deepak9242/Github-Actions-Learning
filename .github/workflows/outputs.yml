@@ -12,6 +12,7 @@ jobs:
       key1: ${{ steps.set_output.outputs.key1 }}
       key2: ${{ steps.set_output.outputs.key2 }}
     steps:
+      - uses: actions/checkout@v3
       - name: Set Outputs
         id: set_output
         run: |
