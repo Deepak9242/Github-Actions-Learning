@@ -34,11 +34,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{inputs.ENVIRONMENT || 'dev'}}
     outputs:
-      component_id: ${{steps.init.outputs.META_COMPONENT}}
+      component_id: ${{steps.init-log.outputs.META_COMPONENT}}
       
     steps:
       - uses: actions/checkout@v3
-        id: init
+        id: init-log
       - shell: bash
         run: |
           echo "Initialize Workflow: ${{ github.event.inputs.ENVIRONMENT }}:denv:${{inputs.ENVIRONMENT}}"
@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: Run a one-line script
         run: echo "Hello, world!"\
-             echo "${{needs.initialize.outputs.component_id}}"
+             cat ${{needs.initialize.outputs}}
 
       - name: Run a multi-line script
         run: |
