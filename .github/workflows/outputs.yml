@@ -11,6 +11,7 @@ jobs:
     outputs:
       key1: ${{ steps.set_output.outputs.key1 }}
       key2: ${{ steps.set_output.outputs.key2 }}
+      META_COMPONENT: ${{steps.set_output.outputs.META_COMPONENT}}
     steps:
       - uses: actions/checkout@v3
       - name: Set Outputs
